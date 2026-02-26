@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTS Mission Control</title>
+  <meta name="description" content="BTS Team Mission Control Dashboard — Manage all agents, projects, and tools in one place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Quick Launch Toolbar -->
+  <div id="toolbar" class="toolbar">
+    <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:18789/')" title="OpenClaw Gateway">
+      <span class="toolbar-icon">🦞</span>
+    </button>
+    <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:1234/')" title="LM Studio">
+      <span class="toolbar-icon">🧠</span>
+    </button>
+    <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:8188/')" title="ComfyUI">
+      <span class="toolbar-icon">🎨</span>
+    </button>
+    <button class="toolbar-btn" onclick="openLink('https://vercel.com/tammys-projects-a618c790')" title="Vercel">
+      <span class="toolbar-icon">▲</span>
+    </button>
+    <button class="toolbar-btn" onclick="openLink('https://supabase.com/dashboard')" title="Supabase">
+      <span class="toolbar-icon">⚡</span>
+    </button>
+    <button class="toolbar-btn" onclick="openLink('https://www.appscreens.com')" title="App Screens">
+      <span class="toolbar-icon">📱</span>
+    </button>
+    <div class="toolbar-divider"></div>
+    <button class="toolbar-btn accent" onclick="showSection('terminal')" title="Terminal">
+      <span class="toolbar-icon">⌨️</span>
+    </button>
+  </div>
+
+  <!-- Sidebar Navigation -->
+  <nav id="sidebar" class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🚀</div>
+      <div class="logo-text">
+        <span class="logo-title">Mission Control</span>
+        <span class="logo-sub">BTS Team</span>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <button class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')">
+        <span class="nav-icon">📊</span> Dashboard
+      </button>
+      <button class="nav-item" data-section="agents" onclick="showSection('agents')">
+        <span class="nav-icon">🤖</span> Agents
+      </button>
+      <button class="nav-item" data-section="projects" onclick="showSection('projects')">
+        <span class="nav-icon">📋</span> Projects
+      </button>
+      <button class="nav-item" data-section="simulator" onclick="showSection('simulator')">
+        <span class="nav-icon">📱</span> iOS Simulator
+      </button>
+      <button class="nav-item" data-section="social" onclick="showSection('social')">
+        <span class="nav-icon">📣</span> Social Media
+      </button>
+      <button class="nav-item" data-section="comfyui" onclick="showSection('comfyui')">
+        <span class="nav-icon">🎨</span> ComfyUI Studio
+      </button>
+      <button class="nav-item" data-section="devtools" onclick="showSection('devtools')">
+        <span class="nav-icon">🔧</span> Dev Tools
+      </button>
+      <button class="nav-item" data-section="activity" onclick="showSection('activity')">
+        <span class="nav-icon">👁️</span> Live Activity
+      </button>
+      <button class="nav-item" data-section="terminal" onclick="showSection('terminal')">
+        <span class="nav-icon">⌨️</span> Terminal
+      </button>
+    </div>
+    <div class="sidebar-footer">
+      <div class="system-status">
+        <div class="status-dot online"></div>
+        <span>All Systems Online</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main" class="main-content">
+
+    <!-- ============ DASHBOARD ============ -->
+    <section id="section-dashboard" class="section active">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Mission Control</h1>
+          <p class="section-subtitle" id="current-time"></p>
+        </div>
+        <div class="header-actions">
+          <div class="health-badge">
+            <div class="status-dot online pulse"></div>
+            <span>LM Studio</span>
+          </div>
+          <div class="health-badge">
+            <div class="status-dot online pulse"></div>
+            <span>OpenClaw</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Status Cards -->
+      <div class="agent-grid" id="agent-grid"></div>
+
+      <!-- Quick Actions Row -->
+      <div class="quick-actions">
+        <h2 class="subsection-title">Quick Actions</h2>
+        <div class="actions-row">
+          <button class="action-card" onclick="showSection('simulator')">
+            <div class="action-icon">📱</div>
+            <span>iOS Preview</span>
+          </button>
+          <button class="action-card" onclick="showSection('comfyui')">
+            <div class="action-icon">🎨</div>
+            <span>Generate Assets</span>
+          </button>
+          <button class="action-card" onclick="showSection('social')">
+            <div class="action-icon">📣</div>
+            <span>Social Post</span>
+          </button>
+          <button class="action-card" onclick="showSection('projects')">
+            <div class="action-icon">📋</div>
+            <span>View Projects</span>
+          </button>
+          <button class="action-card" onclick="showSection('devtools')">
+            <div class="action-icon">🚀</div>
+            <span>Build & Deploy</span>
+          </button>
+          <button class="action-card" onclick="showSection('activity')">
+            <div class="action-icon">👁️</div>
+            <span>Watch Agents</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Recent Activity Feed -->
+      <div class="feed-section">
+        <h2 class="subsection-title">Recent Activity</h2>
+        <div class="feed" id="activity-feed"></div>
+      </div>
+    </section>
+
+    <!-- ============ AGENTS ============ -->
+    <section id="section-agents" class="section">
+      <div class="section-header">
+        <h1 class="section-title">Agent Teams</h1>
+      </div>
+      <div class="agent-detail-grid" id="agent-detail-grid"></div>
+    </section>
+
+    <!-- ============ PROJECTS / KANBAN ============ -->
+    <section id="section-projects" class="section">
+      <div class="section-header">
+        <h1 class="section-title">Project Board</h1>
+        <div class="header-actions">
+          <select id="project-agent-filter" class="select-elegant" onchange="filterProjects()">
+            <option value="all">All Agents</option>
+            <option value="ozzy">Ozzy — COO</option>
+            <option value="jace">Jace — Intelligence</option>
+            <option value="vex">Vex — CTO</option>
+            <option value="appstar">App Star — iOS</option>
+            <option value="blaze">Blaze — CMO</option>
+            <option value="claude">Claude — IT</option>
+          </select>
+          <button class="btn-primary" onclick="addProject()">+ New Project</button>
+        </div>
+      </div>
+      <div class="kanban-board">
+        <div class="kanban-column" data-status="backlog">
+          <div class="kanban-header">📥 Backlog</div>
+          <div class="kanban-cards" id="kanban-backlog"></div>
+        </div>
+        <div class="kanban-column" data-status="progress">
+          <div class="kanban-header">🔨 In Progress</div>
+          <div class="kanban-cards" id="kanban-progress"></div>
+        </div>
+        <div class="kanban-column" data-status="review">
+          <div class="kanban-header">👁️ Review</div>
+          <div class="kanban-cards" id="kanban-review"></div>
+        </div>
+        <div class="kanban-column" data-status="done">
+          <div class="kanban-header">✅ Done</div>
+          <div class="kanban-cards" id="kanban-done"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ iOS SIMULATOR ============ -->
+    <section id="section-simulator" class="section">
+      <div class="section-header">
+        <h1 class="section-title">iOS Simulator</h1>
+        <div class="header-actions">
+          <select id="device-select" class="select-elegant" onchange="changeDevice()">
+            <option value="iphone15pro">iPhone 15 Pro</option>
+            <option value="iphone15">iPhone 15</option>
+            <option value="iphoneSE">iPhone SE</option>
+            <option value="ipad">iPad Pro</option>
+          </select>
+          <button class="btn-secondary" onclick="screenshotSimulator()">📸 Screenshot</button>
+          <button class="btn-secondary" onclick="recordSimulator()">🔴 Record</button>
+        </div>
+      </div>
+      <div class="simulator-layout">
+        <div class="simulator-frame" id="simulator-frame">
+          <div class="device-notch"></div>
+          <iframe id="simulator-iframe" src="about:blank" class="simulator-screen"></iframe>
+          <div class="device-home-bar"></div>
+        </div>
+        <div class="simulator-controls">
+          <div class="control-group">
+            <label class="control-label">Preview URL</label>
+            <div class="input-row">
+              <input type="url" id="simulator-url" class="input-elegant" placeholder="http://localhost:3000" value="http://localhost:3000">
+              <button class="btn-primary" onclick="loadSimulator()">Load</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Expo QR Code</label>
+            <div class="qr-container" id="expo-qr">
+              <div class="qr-placeholder">Enter Expo URL to generate QR</div>
+            </div>
+            <div class="input-row">
+              <input type="text" id="expo-url" class="input-elegant" placeholder="exp://192.168.1.116:8081">
+              <button class="btn-primary" onclick="generateExpoQR()">Generate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOCIAL MEDIA ============ -->
+    <section id="section-social" class="section">
+      <div class="section-header">
+        <h1 class="section-title">Social Media Command Center</h1>
+        <div class="header-actions">
+          <button class="btn-primary" onclick="createPost()">+ New Post</button>
+        </div>
+      </div>
+      <div class="social-layout">
+        <div class="social-composer">
+          <h3 class="card-title">Compose Post</h3>
+          <textarea id="post-content" class="textarea-elegant" rows="4" placeholder="What's happening with Wizard of Apps?"></textarea>
+          <div class="platform-toggles">
+            <label class="platform-toggle active"><input type="checkbox" checked> 𝕏 Twitter</label>
+            <label class="platform-toggle"><input type="checkbox"> 📸 Instagram</label>
+            <label class="platform-toggle"><input type="checkbox"> 🎵 TikTok</label>
+            <label class="platform-toggle"><input type="checkbox"> 💼 LinkedIn</label>
+          </div>
+          <div class="post-actions">
+            <button class="btn-secondary">Save Draft</button>
+            <button class="btn-secondary">Schedule</button>
+            <button class="btn-primary">Publish Now</button>
+          </div>
+        </div>
+        <div class="content-calendar">
+          <h3 class="card-title">Content Calendar</h3>
+          <div class="calendar-grid" id="calendar-grid"></div>
+        </div>
+        <div class="asset-library">
+          <h3 class="card-title">Asset Library</h3>
+          <div class="asset-grid" id="asset-grid">
+            <div class="asset-empty">Generate assets in ComfyUI Studio →</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMFYUI ============ -->
+    <section id="section-comfyui" class="section">
+      <div class="section-header">
+        <h1 class="section-title">ComfyUI Studio</h1>
+        <div class="header-actions">
+          <button class="btn-secondary" onclick="openLink('http://127.0.0.1:8188/')">Open Full ComfyUI ↗</button>
+        </div>
+      </div>
+      <div class="comfy-layout">
+        <div class="comfy-quick-actions">
+          <h3 class="card-title">Quick Generate</h3>
+          <div class="comfy-presets">
+            <button class="preset-card" onclick="generatePreset('screenshot')">
+              <span class="preset-icon">📱</span>
+              <span class="preset-label">App Screenshots</span>
+            </button>
+            <button class="preset-card" onclick="generatePreset('social')">
+              <span class="preset-icon">📣</span>
+              <span class="preset-label">Social Graphics</span>
+            </button>
+            <button class="preset-card" onclick="generatePreset('banner')">
+              <span class="preset-icon">🖼️</span>
+              <span class="preset-label">Marketing Banner</span>
+            </button>
+            <button class="preset-card" onclick="generatePreset('icon')">
+              <span class="preset-icon">⭐</span>
+              <span class="preset-label">App Icon</span>
+            </button>
+            <button class="preset-card" onclick="generatePreset('splash')">
+              <span class="preset-icon">🌊</span>
+              <span class="preset-label">Splash Screen</span>
+            </button>
+            <button class="preset-card" onclick="generatePreset('logo')">
+              <span class="preset-icon">💎</span>
+              <span class="preset-label">Logo</span>
+            </button>
+          </div>
+        </div>
+        <div class="comfy-embed">
+          <iframe src="http://127.0.0.1:8188/" class="comfy-iframe" id="comfy-iframe"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DEV TOOLS ============ -->
+    <section id="section-devtools" class="section">
+      <div class="section-header">
+        <h1 class="section-title">App Development Toolkit</h1>
+      </div>
+      <div class="devtools-grid">
+        <div class="devtool-card">
+          <h3 class="card-title">🏗️ Build Status</h3>
+          <div class="build-list" id="build-list">
+            <div class="build-item">
+              <div class="build-status success"></div>
+              <div class="build-info">
+                <span class="build-name">wizard-of-apps (iOS)</span>
+                <span class="build-time">Last build: 2h ago</span>
+              </div>
+            </div>
+            <div class="build-item">
+              <div class="build-status pending"></div>
+              <div class="build-info">
+                <span class="build-name">market-signals-widget</span>
+                <span class="build-time">In queue...</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn-primary full-width" onclick="triggerBuild()">Trigger EAS Build</button>
+        </div>
+        <div class="devtool-card">
+          <h3 class="card-title">🍎 App Store Status</h3>
+          <div class="store-status">
+            <div class="store-item">
+              <span class="store-badge ready">Ready for Sale</span>
+              <span>Wizard of Apps v1.2</span>
+            </div>
+            <div class="store-item">
+              <span class="store-badge review">In Review</span>
+              <span>Market Signals v1.0</span>
+            </div>
+          </div>
+        </div>
+        <div class="devtool-card">
+          <h3 class="card-title">✈️ TestFlight</h3>
+          <div class="testflight-section">
+            <div class="qr-container" id="testflight-qr">
+              <div class="qr-placeholder">No active TestFlight build</div>
+            </div>
+            <input type="text" class="input-elegant" id="testflight-url" placeholder="TestFlight URL">
+            <button class="btn-primary full-width" onclick="generateTestFlightQR()">Generate Link</button>
+          </div>
+        </div>
+        <div class="devtool-card">
+          <h3 class="card-title">🔑 API Key Vault</h3>
+          <div class="key-list">
+            <div class="key-item">
+              <span class="key-name">GEMINI_API_KEY</span>
+              <span class="key-value">AIzaSy•••••V7w</span>
+              <button class="btn-tiny" onclick="copyKey('gemini')">Copy</button>
+            </div>
+            <div class="key-item">
+              <span class="key-name">SUPABASE_KEY</span>
+              <span class="key-value">eyJhbG•••••</span>
+              <button class="btn-tiny" onclick="copyKey('supabase')">Copy</button>
+            </div>
+            <div class="key-item">
+              <span class="key-name">OPENAI_KEY</span>
+              <span class="key-value">sk-proj•••••</span>
+              <button class="btn-tiny" onclick="copyKey('openai')">Copy</button>
+            </div>
+          </div>
+        </div>
+        <div class="devtool-card">
+          <h3 class="card-title">📦 Dependencies</h3>
+          <div class="dep-list">
+            <div class="dep-item outdated">
+              <span>next</span>
+              <span class="dep-version">16.1.6 → 16.2.0</span>
+            </div>
+            <div class="dep-item current">
+              <span>react</span>
+              <span class="dep-version">19.0.0 ✓</span>
+            </div>
+            <div class="dep-item current">
+              <span>expo</span>
+              <span class="dep-version">52.0.0 ✓</span>
+            </div>
+          </div>
+        </div>
+        <div class="devtool-card">
+          <h3 class="card-title">🌍 Environments</h3>
+          <div class="env-list">
+            <button class="env-item active-env">
+              <div class="env-dot dev"></div>
+              <span>Development</span>
+              <span class="env-url">localhost:3000</span>
+            </button>
+            <button class="env-item">
+              <div class="env-dot staging"></div>
+              <span>Staging</span>
+              <span class="env-url">staging.wizardofapps.com</span>
+            </button>
+            <button class="env-item">
+              <div class="env-dot prod"></div>
+              <span>Production</span>
+              <span class="env-url">wizardofapps.com</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIVE ACTIVITY ============ -->
+    <section id="section-activity" class="section">
+      <div class="section-header">
+        <h1 class="section-title">Live Agent Activity</h1>
+        <div class="header-actions">
+          <div class="health-badge">
+            <div class="status-dot online pulse"></div>
+            <span>Real-time</span>
+          </div>
+        </div>
+      </div>
+      <div class="activity-grid" id="live-activity-grid"></div>
+    </section>
+
+    <!-- ============ TERMINAL ============ -->
+    <section id="section-terminal" class="section">
+      <div class="section-header">
+        <h1 class="section-title">Terminal</h1>
+        <div class="header-actions">
+          <button class="btn-secondary" onclick="clearTerminal()">Clear</button>
+        </div>
+      </div>
+      <div class="terminal-container">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="terminal-title">tammysantanamacstudio — zsh</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-line">
+            <span class="terminal-prompt">❯</span>
+            <span class="terminal-text">Welcome to BTS Mission Control Terminal</span>
+          </div>
+          <div class="terminal-line">
+            <span class="terminal-prompt">❯</span>
+            <span class="terminal-text">Type commands to interact with your dev environment</span>
+          </div>
+        </div>
+        <div class="terminal-input-row">
+          <span class="terminal-prompt">❯</span>
+          <input type="text" id="terminal-input" class="terminal-input" placeholder="Type a command..." autofocus onkeydown="handleTerminalInput(event)">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- New Project Modal -->
+  <div id="modal-overlay" class="modal-overlay" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <h2 class="modal-title" id="modal-title">New Project</h2>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
