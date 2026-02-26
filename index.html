@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BTS Mission Control</title>
-  <meta name="description" content="BTS Team Mission Control Dashboard — Manage all agents, projects, and tools in one place.">
+  <meta name="description"
+    content="BTS Team Mission Control Dashboard — Manage all agents, projects, and tools in one place.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <!-- Quick Launch Toolbar -->
   <div id="toolbar" class="toolbar">
     <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:18789/')" title="OpenClaw Gateway">
-      <span class="toolbar-icon">🦞</span>
+      <i data-lucide="radio" class="toolbar-lucide"></i>
     </button>
     <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:1234/')" title="LM Studio">
-      <span class="toolbar-icon">🧠</span>
+      <i data-lucide="brain" class="toolbar-lucide"></i>
     </button>
     <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:8188/')" title="ComfyUI">
-      <span class="toolbar-icon">🎨</span>
+      <i data-lucide="palette" class="toolbar-lucide"></i>
     </button>
     <button class="toolbar-btn" onclick="openLink('https://vercel.com/tammys-projects-a618c790')" title="Vercel">
-      <span class="toolbar-icon">▲</span>
+      <i data-lucide="triangle" class="toolbar-lucide"></i>
     </button>
     <button class="toolbar-btn" onclick="openLink('https://supabase.com/dashboard')" title="Supabase">
-      <span class="toolbar-icon">⚡</span>
+      <i data-lucide="database" class="toolbar-lucide"></i>
     </button>
     <button class="toolbar-btn" onclick="openLink('https://www.appscreens.com')" title="App Screens">
-      <span class="toolbar-icon">📱</span>
+      <i data-lucide="smartphone" class="toolbar-lucide"></i>
     </button>
     <div class="toolbar-divider"></div>
     <button class="toolbar-btn accent" onclick="showSection('terminal')" title="Terminal">
-      <span class="toolbar-icon">⌨️</span>
+      <i data-lucide="terminal" class="toolbar-lucide"></i>
     </button>
   </div>
 
   <!-- Sidebar Navigation -->
   <nav id="sidebar" class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon">🚀</div>
+      <div class="logo-icon"><i data-lucide="rocket" style="width:24px;height:24px;color:var(--accent)"></i></div>
       <div class="logo-text">
         <span class="logo-title">Mission Control</span>
         <span class="logo-sub">BTS Team</span>
@@ -48,31 +53,31 @@
     </div>
     <div class="sidebar-nav">
       <button class="nav-item active" data-section="dashboard" onclick="showSection('dashboard')">
-        <span class="nav-icon">📊</span> Dashboard
+        <i data-lucide="layout-dashboard" class="nav-lucide"></i> Dashboard
       </button>
       <button class="nav-item" data-section="agents" onclick="showSection('agents')">
-        <span class="nav-icon">🤖</span> Agents
+        <i data-lucide="users" class="nav-lucide"></i> Agents
       </button>
       <button class="nav-item" data-section="projects" onclick="showSection('projects')">
-        <span class="nav-icon">📋</span> Projects
+        <i data-lucide="kanban" class="nav-lucide"></i> Projects
       </button>
       <button class="nav-item" data-section="simulator" onclick="showSection('simulator')">
-        <span class="nav-icon">📱</span> iOS Simulator
+        <i data-lucide="smartphone" class="nav-lucide"></i> iOS Simulator
       </button>
       <button class="nav-item" data-section="social" onclick="showSection('social')">
-        <span class="nav-icon">📣</span> Social Media
+        <i data-lucide="megaphone" class="nav-lucide"></i> Social Media
       </button>
       <button class="nav-item" data-section="comfyui" onclick="showSection('comfyui')">
-        <span class="nav-icon">🎨</span> ComfyUI Studio
+        <i data-lucide="palette" class="nav-lucide"></i> ComfyUI Studio
       </button>
       <button class="nav-item" data-section="devtools" onclick="showSection('devtools')">
-        <span class="nav-icon">🔧</span> Dev Tools
+        <i data-lucide="wrench" class="nav-lucide"></i> Dev Tools
       </button>
       <button class="nav-item" data-section="activity" onclick="showSection('activity')">
-        <span class="nav-icon">👁️</span> Live Activity
+        <i data-lucide="activity" class="nav-lucide"></i> Live Activity
       </button>
       <button class="nav-item" data-section="terminal" onclick="showSection('terminal')">
-        <span class="nav-icon">⌨️</span> Terminal
+        <i data-lucide="terminal" class="nav-lucide"></i> Terminal
       </button>
     </div>
     <div class="sidebar-footer">
@@ -216,7 +221,8 @@
           <div class="control-group">
             <label class="control-label">Preview URL</label>
             <div class="input-row">
-              <input type="url" id="simulator-url" class="input-elegant" placeholder="http://localhost:3000" value="http://localhost:3000">
+              <input type="url" id="simulator-url" class="input-elegant" placeholder="http://localhost:3000"
+                value="http://localhost:3000">
               <button class="btn-primary" onclick="loadSimulator()">Load</button>
             </div>
           </div>
@@ -245,7 +251,8 @@
       <div class="social-layout">
         <div class="social-composer">
           <h3 class="card-title">Compose Post</h3>
-          <textarea id="post-content" class="textarea-elegant" rows="4" placeholder="What's happening with Wizard of Apps?"></textarea>
+          <textarea id="post-content" class="textarea-elegant" rows="4"
+            placeholder="What's happening with Wizard of Apps?"></textarea>
           <div class="platform-toggles">
             <label class="platform-toggle active"><input type="checkbox" checked> 𝕏 Twitter</label>
             <label class="platform-toggle"><input type="checkbox"> 📸 Instagram</label>
@@ -467,7 +474,8 @@
         </div>
         <div class="terminal-input-row">
           <span class="terminal-prompt">❯</span>
-          <input type="text" id="terminal-input" class="terminal-input" placeholder="Type a command..." autofocus onkeydown="handleTerminalInput(event)">
+          <input type="text" id="terminal-input" class="terminal-input" placeholder="Type a command..." autofocus
+            onkeydown="handleTerminalInput(event)">
         </div>
       </div>
     </section>
@@ -483,4 +491,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>

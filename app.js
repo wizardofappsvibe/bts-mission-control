@@ -660,6 +660,10 @@ async function pollAgentStatus() {
 // ====== INIT ======
 document.addEventListener('DOMContentLoaded', () => {
     initAuth();
+
+    // Initialize Lucide icons
+    if (window.lucide) lucide.createIcons();
+
     renderAgentCards();
     renderAgentDetails();
     renderFeed();
