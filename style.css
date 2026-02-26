@@ -1648,6 +1648,182 @@ body {
   background: var(--text-tertiary);
 }
 
+/* ============ THE FACTORY ============ */
+.factory-pipeline {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 32px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.factory-card {
+  flex: 1;
+  min-width: 300px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.factory-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.factory-card-stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.factory-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.factory-agent-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.factory-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.factory-agent-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.factory-agent-role {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.factory-stage-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.factory-description {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.factory-tools {
+  margin-bottom: 14px;
+}
+
+.factory-tools-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.factory-tool-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.factory-tool {
+  padding: 4px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.factory-output {
+  margin-bottom: 14px;
+}
+
+.factory-output-item {
+  font-size: 12px;
+  color: var(--text);
+  padding: 8px 12px;
+  background: var(--bg);
+  border-radius: var(--radius-xs);
+  border-left: 3px solid var(--accent);
+}
+
+.factory-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 8px 12px;
+  background: var(--accent-light);
+  border-radius: var(--radius-xs);
+  text-align: center;
+}
+
+.factory-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+.factory-arrow-line {
+  width: 2px;
+  height: 30px;
+  background: linear-gradient(to bottom, var(--border), var(--accent), var(--border));
+}
+
+.factory-arrow-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  white-space: nowrap;
+  padding: 4px 10px;
+  background: var(--accent-light);
+  border-radius: 8px;
+}
+
+.factory-queue {
+  margin-top: 16px;
+}
+
+.factory-queue-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width: 1200px) {
   .agent-grid {

@@ -79,6 +79,10 @@
       <button class="nav-item" data-section="terminal" onclick="showSection('terminal')">
         <i data-lucide="terminal" class="nav-lucide"></i> Terminal
       </button>
+      <div style="height:1px;background:var(--border-light);margin:8px 0"></div>
+      <button class="nav-item" data-section="factory" onclick="showSection('factory')">
+        <i data-lucide="factory" class="nav-lucide"></i> The Factory
+      </button>
     </div>
     <div class="sidebar-footer">
       <div class="system-status">
@@ -443,6 +447,158 @@
         </div>
       </div>
       <div class="activity-grid" id="live-activity-grid"></div>
+    </section>
+
+    <!-- ============ THE FACTORY ============ -->
+    <section id="section-factory" class="section">
+      <div class="section-header">
+        <h1 class="section-title">The Factory</h1>
+        <div class="header-actions">
+          <div class="health-badge">
+            <div class="status-dot online pulse"></div>
+            <span>Pipeline Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pipeline Flow -->
+      <div class="factory-pipeline">
+        <!-- STAGE 1: RESEARCH (Luna) -->
+        <div class="factory-card" data-stage="research">
+          <div class="factory-card-stripe" style="background:#E879F9"></div>
+          <div class="factory-card-header">
+            <div class="factory-agent-info">
+              <div class="factory-avatar" style="background:#FAE8FF">🔍</div>
+              <div>
+                <div class="factory-agent-name">Luna</div>
+                <div class="factory-agent-role">Research Scout</div>
+              </div>
+            </div>
+            <div class="factory-stage-badge" style="background:#FAE8FF;color:#A855F7">Stage 1</div>
+          </div>
+          <div class="factory-description">
+            24/7 trend research across Product Hunt, LinkedIn, X, TikTok, Reddit, and Hacker News. Identifies winning
+            app ideas and writes product briefs.
+          </div>
+          <div class="factory-tools">
+            <h4 class="factory-tools-title">Tools</h4>
+            <div class="factory-tool-list">
+              <span class="factory-tool">Product Hunt</span>
+              <span class="factory-tool">LinkedIn</span>
+              <span class="factory-tool">X / Twitter</span>
+              <span class="factory-tool">TikTok</span>
+              <span class="factory-tool">Reddit</span>
+              <span class="factory-tool">Hacker News</span>
+              <span class="factory-tool">App Store</span>
+              <span class="factory-tool">Google Trends</span>
+              <span class="factory-tool">SimilarWeb</span>
+            </div>
+          </div>
+          <div class="factory-output">
+            <h4 class="factory-tools-title">Output</h4>
+            <div class="factory-output-item">Product Brief with market size, competition, revenue estimate</div>
+          </div>
+          <div class="factory-status">Scanning for opportunities...</div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="factory-arrow">
+          <div class="factory-arrow-line"></div>
+          <div class="factory-arrow-label">Boss Approves</div>
+          <div class="factory-arrow-line"></div>
+        </div>
+
+        <!-- STAGE 2: BUILD (Ivy) -->
+        <div class="factory-card" data-stage="build">
+          <div class="factory-card-stripe" style="background:#34D399"></div>
+          <div class="factory-card-header">
+            <div class="factory-agent-info">
+              <div class="factory-avatar" style="background:#D1FAE5">💻</div>
+              <div>
+                <div class="factory-agent-name">Ivy</div>
+                <div class="factory-agent-role">Code & Prototype Builder</div>
+              </div>
+            </div>
+            <div class="factory-stage-badge" style="background:#D1FAE5;color:#059669">Stage 2</div>
+          </div>
+          <div class="factory-description">
+            Builds working prototypes with demo videos using Cursor Cloud Agent recording. Ships MVPs in hours, not
+            days.
+          </div>
+          <div class="factory-tools">
+            <h4 class="factory-tools-title">Tools</h4>
+            <div class="factory-tool-list">
+              <span class="factory-tool">Cursor AI</span>
+              <span class="factory-tool">Cloud Agent Recording</span>
+              <span class="factory-tool">Expo / React Native</span>
+              <span class="factory-tool">Next.js / Vite</span>
+              <span class="factory-tool">EAS Build</span>
+              <span class="factory-tool">GitHub</span>
+              <span class="factory-tool">Vercel</span>
+              <span class="factory-tool">ComfyUI</span>
+              <span class="factory-tool">App Screenshots</span>
+            </div>
+          </div>
+          <div class="factory-output">
+            <h4 class="factory-tools-title">Output</h4>
+            <div class="factory-output-item">Working prototype + demo video + 5 screenshots + GitHub repo</div>
+          </div>
+          <div class="factory-status">Awaiting product brief...</div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="factory-arrow">
+          <div class="factory-arrow-line"></div>
+          <div class="factory-arrow-label">Boss Approves</div>
+          <div class="factory-arrow-line"></div>
+        </div>
+
+        <!-- STAGE 3: DISTRIBUTE (Nova) -->
+        <div class="factory-card" data-stage="distribute">
+          <div class="factory-card-stripe" style="background:#60A5FA"></div>
+          <div class="factory-card-header">
+            <div class="factory-agent-info">
+              <div class="factory-avatar" style="background:#DBEAFE">🚀</div>
+              <div>
+                <div class="factory-agent-name">Nova</div>
+                <div class="factory-agent-role">Distribution & Launch</div>
+              </div>
+            </div>
+            <div class="factory-stage-badge" style="background:#DBEAFE;color:#2563EB">Stage 3</div>
+          </div>
+          <div class="factory-description">
+            Pushes products to every relevant platform. Handles ASO, metadata, pricing, launch campaigns, and
+            post-launch metrics.
+          </div>
+          <div class="factory-tools">
+            <h4 class="factory-tools-title">Tools</h4>
+            <div class="factory-tool-list">
+              <span class="factory-tool">App Store Connect</span>
+              <span class="factory-tool">Google Play Console</span>
+              <span class="factory-tool">EAS Submit</span>
+              <span class="factory-tool">TestFlight</span>
+              <span class="factory-tool">Gumroad</span>
+              <span class="factory-tool">Amazon KDP</span>
+              <span class="factory-tool">Product Hunt</span>
+              <span class="factory-tool">Vercel Deploy</span>
+              <span class="factory-tool">ASO Keywords</span>
+            </div>
+          </div>
+          <div class="factory-output">
+            <h4 class="factory-tools-title">Output</h4>
+            <div class="factory-output-item">Live product on stores + launch campaign + daily metrics report</div>
+          </div>
+          <div class="factory-status">Awaiting prototype...</div>
+        </div>
+      </div>
+
+      <!-- Factory Queue -->
+      <div class="factory-queue">
+        <h2 class="subsection-title">Pipeline Queue</h2>
+        <div class="factory-queue-items" id="factory-queue">
+          <div class="factory-queue-empty">No products in the pipeline yet. Luna is scanning for opportunities...</div>
+        </div>
+      </div>
     </section>
 
     <!-- ============ TERMINAL ============ -->
