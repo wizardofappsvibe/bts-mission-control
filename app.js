@@ -657,6 +657,152 @@ async function pollAgentStatus() {
     }
 }
 
+// ====== FACTORY PIPELINE TRACKER ======
+const STAGES = ['research', 'building', 'approval', 'distributing', 'launched'];
+const STAGE_COLORS = {
+    research: '#E879F9',
+    building: '#34D399',
+    approval: '#F59E0B',
+    distributing: '#60A5FA',
+    launched: '#34C759',
+};
+
+let factoryItems = [];
+
+function loadFactory() {
+    const saved = localStorage.getItem('bts-factory');
+    if (saved) {
+        factoryItems = JSON.parse(saved);
+    } else {
+        factoryItems = [
+            { id: 1, name: 'AI Habit Tracker', type: 'app', stage: 'building', agent: 'ivy', created: '2h ago', revenue: '$5K/mo potential' },
+            { id: 2, name: 'Prompt Pack Marketplace', type: 'web', stage: 'research', agent: 'luna', created: '30m ago', revenue: '$2K/mo potential' },
+            { id: 3, name: 'Screenshot Automation Tool', type: 'app', stage: 'approval', agent: 'ivy', created: '1d ago', revenue: '$8K/mo potential' },
+            { id: 4, name: 'AI Resume Builder', type: 'web', stage: 'research', agent: 'luna', created: '15m ago', revenue: '$10K/mo potential' },
+            { id: 5, name: 'Micro SaaS Boilerplate', type: 'ebook', stage: 'distributing', agent: 'nova', created: '3d ago', revenue: '$3K one-time' },
+            { id: 6, name: 'Focus Timer Pro', type: 'app', stage: 'launched', agent: 'nova', created: '1w ago', revenue: '$1.2K/mo' },
+        ];
+        saveFactory();
+    }
+    renderTracker();
+}
+
+function saveFactory() {
+    localStorage.setItem('bts-factory', JSON.stringify(factoryItems));
+}
+
+function renderTracker() {
+    STAGES.forEach(stage => {
+        const lane = document.getElementById(`tracker-${stage}`);
+        const count = document.getElementById(`count-${stage}`);
+        if (!lane) return;
+
+        const items = factoryItems.filter(i => i.stage === stage);
+        if (count) count.textContent = items.length;
+
+        const typeStyles = {
+            app: { bg: '#EEF2FF', color: '#4F46E5', label: 'App' },
+            web: { bg: '#FEF3C7', color: '#D97706', label: 'Web' },
+            ebook: { bg: '#FDE8E8', color: '#DC2626', label: 'eBook' },
+        };
+
+        lane.innerHTML = items.length === 0
+            ? '<div style="text-align:center;padding:20px;color:var(--text-tertiary);font-size:11px">Empty</div>'
+            : items.map(item => {
+                const t = typeStyles[item.type] || typeStyles.app;
+                const nextStage = STAGES[STAGES.indexOf(item.stage) + 1];
+                const isApproval = item.stage === 'approval';
+
+                let actions = '';
+                if (nextStage) {
+                    if (isApproval) {
+                        actions = `<div class="tracker-item-actions">
+              <button class="tracker-move-btn approve" onclick="moveFactoryItem(${item.id}, '${nextStage}')">Approve & Ship</button>
+            </div>`;
+                    } else {
+                        actions = `<div class="tracker-item-actions">
+              <button class="tracker-move-btn" onclick="moveFactoryItem(${item.id}, '${nextStage}')">Move →</button>
+            </div>`;
+                    }
+                }
+
+                return `
+          <div class="tracker-item" draggable="true" ondragstart="factoryDragStart(event, ${item.id})">
+            <div class="tracker-item-name">${item.name}</div>
+            <div class="tracker-item-meta">
+              <span class="tracker-item-type" style="background:${t.bg};color:${t.color}">${t.label}</span>
+              <span>${item.revenue || ''}</span>
+            </div>
+            ${actions}
+          </div>
+        `;
+            }).join('');
+    });
+
+    // Setup drag-and-drop on lanes
+    document.querySelectorAll('.tracker-lane-items').forEach(lane => {
+        lane.ondragover = e => { e.preventDefault(); lane.style.background = 'rgba(0,113,227,0.04)'; };
+        lane.ondragleave = () => { lane.style.background = ''; };
+        lane.ondrop = e => {
+            e.preventDefault();
+            lane.style.background = '';
+            const itemId = parseInt(e.dataTransfer.getData('text/plain'));
+            const newStage = lane.id.replace('tracker-', '');
+            moveFactoryItem(itemId, newStage);
+        };
+    });
+}
+
+function factoryDragStart(event, itemId) {
+    event.dataTransfer.setData('text/plain', itemId);
+}
+
+function moveFactoryItem(itemId, newStage) {
+    const item = factoryItems.find(i => i.id === itemId);
+    if (!item) return;
+    item.stage = newStage;
+    // Update agent based on stage
+    if (newStage === 'research') item.agent = 'luna';
+    else if (newStage === 'building') item.agent = 'ivy';
+    else if (newStage === 'distributing' || newStage === 'launched') item.agent = 'nova';
+    saveFactory();
+    renderTracker();
+}
+
+function addFactoryIdea() {
+    document.getElementById('modal-title').textContent = 'New Factory Idea';
+    document.getElementById('modal-body').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <input type="text" id="factory-idea-name" class="input-elegant" placeholder="Product name" style="width:100%">
+      <select id="factory-idea-type" class="select-elegant">
+        <option value="app">Mobile App</option>
+        <option value="web">Web App</option>
+        <option value="ebook">eBook / Digital Product</option>
+      </select>
+      <input type="text" id="factory-idea-revenue" class="input-elegant" placeholder="Revenue estimate (e.g. $5K/mo)">
+      <button class="btn-primary" onclick="submitFactoryIdea()">Send to Luna</button>
+    </div>
+  `;
+    document.getElementById('modal-overlay').classList.add('active');
+}
+
+function submitFactoryIdea() {
+    const name = document.getElementById('factory-idea-name').value.trim();
+    if (!name) return;
+    factoryItems.push({
+        id: Date.now(),
+        name,
+        type: document.getElementById('factory-idea-type').value,
+        stage: 'research',
+        agent: 'luna',
+        created: 'just now',
+        revenue: document.getElementById('factory-idea-revenue').value || '',
+    });
+    saveFactory();
+    renderTracker();
+    closeModal();
+}
+
 // ====== INIT ======
 document.addEventListener('DOMContentLoaded', () => {
     initAuth();
@@ -670,6 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCalendar();
     renderLiveActivity();
     loadProjects();
+    loadFactory();
     updateClock();
     pollAgentStatus();
 
@@ -682,3 +829,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Refresh live activity every 60 seconds
     setInterval(renderLiveActivity, 60000);
 });
+

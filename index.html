@@ -592,11 +592,53 @@
         </div>
       </div>
 
-      <!-- Factory Queue -->
-      <div class="factory-queue">
-        <h2 class="subsection-title">Pipeline Queue</h2>
-        <div class="factory-queue-items" id="factory-queue">
-          <div class="factory-queue-empty">No products in the pipeline yet. Luna is scanning for opportunities...</div>
+      <!-- Pipeline Tracker -->
+      <div class="factory-tracker">
+        <div class="tracker-header">
+          <h2 class="subsection-title">Pipeline Tracker</h2>
+          <button class="btn-primary" onclick="addFactoryIdea()">+ Add Idea</button>
+        </div>
+        <div class="tracker-lanes">
+          <div class="tracker-lane" data-stage="research">
+            <div class="tracker-lane-header" style="border-color:#E879F9">
+              <span class="tracker-lane-dot" style="background:#E879F9"></span>
+              Researching
+              <span class="tracker-lane-count" id="count-research">0</span>
+            </div>
+            <div class="tracker-lane-items" id="tracker-research"></div>
+          </div>
+          <div class="tracker-lane" data-stage="building">
+            <div class="tracker-lane-header" style="border-color:#34D399">
+              <span class="tracker-lane-dot" style="background:#34D399"></span>
+              Building
+              <span class="tracker-lane-count" id="count-building">0</span>
+            </div>
+            <div class="tracker-lane-items" id="tracker-building"></div>
+          </div>
+          <div class="tracker-lane" data-stage="approval">
+            <div class="tracker-lane-header" style="border-color:#F59E0B">
+              <span class="tracker-lane-dot" style="background:#F59E0B"></span>
+              Awaiting Approval
+              <span class="tracker-lane-count" id="count-approval">0</span>
+            </div>
+            <div class="tracker-lane-items" id="tracker-approval"></div>
+          </div>
+          <div class="tracker-lane" data-stage="distributing">
+            <div class="tracker-lane-header" style="border-color:#60A5FA">
+              <span class="tracker-lane-dot" style="background:#60A5FA"></span>
+              Distributing
+              <span class="tracker-lane-count" id="count-distributing">0</span>
+            </div>
+            <div class="tracker-lane-items" id="tracker-distributing"></div>
+          </div>
+          <div class="tracker-lane" data-stage="launched">
+            <div class="tracker-lane-header" style="border-color:#34C759">
+              <span class="tracker-lane-dot" style="background:#34C759"></span>
+              Launched
+              <span class="tracker-lane-count" id="count-launched">0</span>
+            </div>
+            <div class="tracker-lane-items" id="tracker-launched"></div>
+          </div>
         </div>
       </div>
     </section>
