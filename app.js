@@ -658,10 +658,11 @@ async function pollAgentStatus() {
 }
 
 // ====== FACTORY PIPELINE TRACKER ======
-const STAGES = ['research', 'building', 'approval', 'distributing', 'launched'];
+const STAGES = ['research', 'building', 'testing', 'approval', 'distributing', 'launched'];
 const STAGE_COLORS = {
     research: '#E879F9',
     building: '#34D399',
+    testing: '#F97316',
     approval: '#F59E0B',
     distributing: '#60A5FA',
     launched: '#34C759',
@@ -674,14 +675,7 @@ function loadFactory() {
     if (saved) {
         factoryItems = JSON.parse(saved);
     } else {
-        factoryItems = [
-            { id: 1, name: 'AI Habit Tracker', type: 'app', stage: 'building', agent: 'ivy', created: '2h ago', revenue: '$5K/mo potential' },
-            { id: 2, name: 'Prompt Pack Marketplace', type: 'web', stage: 'research', agent: 'luna', created: '30m ago', revenue: '$2K/mo potential' },
-            { id: 3, name: 'Screenshot Automation Tool', type: 'app', stage: 'approval', agent: 'ivy', created: '1d ago', revenue: '$8K/mo potential' },
-            { id: 4, name: 'AI Resume Builder', type: 'web', stage: 'research', agent: 'luna', created: '15m ago', revenue: '$10K/mo potential' },
-            { id: 5, name: 'Micro SaaS Boilerplate', type: 'ebook', stage: 'distributing', agent: 'nova', created: '3d ago', revenue: '$3K one-time' },
-            { id: 6, name: 'Focus Timer Pro', type: 'app', stage: 'launched', agent: 'nova', created: '1w ago', revenue: '$1.2K/mo' },
-        ];
+        factoryItems = [];
         saveFactory();
     }
     renderTracker();
