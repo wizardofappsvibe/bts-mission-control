@@ -21,7 +21,7 @@
     <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:18789/')" title="OpenClaw Gateway">
       <i data-lucide="radio" class="toolbar-lucide"></i>
     </button>
-    <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:1234/')" title="LM Studio">
+    <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:11434/')" title="Ollama">
       <i data-lucide="brain" class="toolbar-lucide"></i>
     </button>
     <button class="toolbar-btn" onclick="openLink('http://127.0.0.1:8188/')" title="ComfyUI">
@@ -37,7 +37,7 @@
       <i data-lucide="smartphone" class="toolbar-lucide"></i>
     </button>
     <div class="toolbar-divider"></div>
-    <button class="toolbar-btn accent" onclick="showSection('terminal')" title="Terminal">
+    <button class="toolbar-btn accent" onclick="showSection('terminal')" title="OpenClaw Sessions">
       <i data-lucide="terminal" class="toolbar-lucide"></i>
     </button>
   </div>
@@ -77,11 +77,17 @@
         <i data-lucide="activity" class="nav-lucide"></i> Live Activity
       </button>
       <button class="nav-item" data-section="terminal" onclick="showSection('terminal')">
-        <i data-lucide="terminal" class="nav-lucide"></i> Terminal
+        <i data-lucide="terminal" class="nav-lucide"></i> Sessions
+      </button>
+      <button class="nav-item" data-section="apple" onclick="showSection('apple')">
+        <i data-lucide="apple" class="nav-lucide"></i> Apple Developer
       </button>
       <div style="height:1px;background:var(--border-light);margin:8px 0"></div>
       <button class="nav-item" data-section="factory" onclick="showSection('factory')">
         <i data-lucide="factory" class="nav-lucide"></i> The Factory
+      </button>
+      <button class="nav-item" data-section="cheatsheet" onclick="showSection('cheatsheet')">
+        <i data-lucide="bookmark" class="nav-lucide"></i> Tammy's Cheat Sheet
       </button>
     </div>
     <div class="sidebar-footer">
@@ -105,7 +111,7 @@
         <div class="header-actions">
           <div class="health-badge">
             <div class="status-dot online pulse"></div>
-            <span>LM Studio</span>
+            <span>Ollama</span>
           </div>
           <div class="health-badge">
             <div class="status-dot online pulse"></div>
@@ -166,36 +172,34 @@
     <!-- ============ PROJECTS / KANBAN ============ -->
     <section id="section-projects" class="section">
       <div class="section-header">
-        <h1 class="section-title">Project Board</h1>
+        <h1 class="section-title">Tammy's Apps</h1>
         <div class="header-actions">
           <select id="project-agent-filter" class="select-elegant" onchange="filterProjects()">
             <option value="all">All Agents</option>
-            <option value="ozzy">Ozzy — COO</option>
-            <option value="jace">Jace — Intelligence</option>
-            <option value="vex">Vex — CTO</option>
-            <option value="appstar">App Star — iOS</option>
+            <option value="luna">Luna — Research</option>
+            <option value="jace">Jace — Strategy</option>
             <option value="blaze">Blaze — CMO</option>
+            <option value="ivy">Ivy — Builder</option>
+            <option value="vex">Vex — CTO/QA</option>
+            <option value="nova">Nova — Launch</option>
             <option value="claude">Claude — IT</option>
+            <option value="ozzy">Ozzy — COO</option>
           </select>
-          <button class="btn-primary" onclick="addProject()">+ New Project</button>
+          <button class="btn-primary" onclick="addProject()">+ New Product</button>
         </div>
       </div>
       <div class="kanban-board">
-        <div class="kanban-column" data-status="backlog">
-          <div class="kanban-header">📥 Backlog</div>
-          <div class="kanban-cards" id="kanban-backlog"></div>
+        <div class="kanban-column" data-status="idea">
+          <div class="kanban-header">💡 Idea <span class="kanban-count" id="count-idea"></span></div>
+          <div class="kanban-cards" id="kanban-idea"></div>
         </div>
-        <div class="kanban-column" data-status="progress">
-          <div class="kanban-header">🔨 In Progress</div>
-          <div class="kanban-cards" id="kanban-progress"></div>
+        <div class="kanban-column" data-status="built">
+          <div class="kanban-header">✅ Built <span class="kanban-count" id="count-built"></span></div>
+          <div class="kanban-cards" id="kanban-built"></div>
         </div>
-        <div class="kanban-column" data-status="review">
-          <div class="kanban-header">👁️ Review</div>
-          <div class="kanban-cards" id="kanban-review"></div>
-        </div>
-        <div class="kanban-column" data-status="done">
-          <div class="kanban-header">✅ Done</div>
-          <div class="kanban-cards" id="kanban-done"></div>
+        <div class="kanban-column" data-status="broken">
+          <div class="kanban-header">🔧 Broken <span class="kanban-count" id="count-broken"></span></div>
+          <div class="kanban-cards" id="kanban-broken"></div>
         </div>
       </div>
     </section>
@@ -231,13 +235,28 @@
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label">Expo QR Code</label>
-            <div class="qr-container" id="expo-qr">
-              <div class="qr-placeholder">Enter Expo URL to generate QR</div>
+            <label class="control-label">Xcode Simulator</label>
+            <div class="input-row">
+              <select id="xcode-device" class="input-elegant">
+                <option value="0050BEFD-0282-4F19-A913-DCC4FFF8C289">iPhone 17 Pro</option>
+                <option value="B90242A0-7099-46A0-8C21-2C3EC3C06737">iPhone 17 Pro Max</option>
+                <option value="54AB9E53-D88E-421E-B249-20D00206B837">iPhone Air</option>
+                <option value="20F8A546-C40D-4D4E-AC0F-60DD8F592D68">iPhone 17</option>
+                <option value="1F36ACA1-6A5C-442D-9D3A-774DFB46F50F">iPhone 16 Pro</option>
+                <option value="70C8BCCD-65C5-4CD5-8249-E20BF90497DD">iPad Pro 13" (M5)</option>
+              </select>
+              <button class="btn-primary" onclick="bootSimulator()">▶ Boot</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">TestFlight QR Code</label>
+            <div class="qr-container" id="testflight-qr">
+              <div class="qr-placeholder">Enter TestFlight URL to generate QR</div>
             </div>
             <div class="input-row">
-              <input type="text" id="expo-url" class="input-elegant" placeholder="exp://192.168.1.116:8081">
-              <button class="btn-primary" onclick="generateExpoQR()">Generate</button>
+              <input type="text" id="testflight-url" class="input-elegant"
+                placeholder="https://testflight.apple.com/join/...">
+              <button class="btn-primary" onclick="generateTestFlightQR()">Generate</button>
             </div>
           </div>
         </div>
@@ -396,39 +415,39 @@
           </div>
         </div>
         <div class="devtool-card">
-          <h3 class="card-title">📦 Dependencies</h3>
+          <h3 class="card-title">📦 Apple Toolchain</h3>
           <div class="dep-list">
-            <div class="dep-item outdated">
-              <span>next</span>
-              <span class="dep-version">16.1.6 → 16.2.0</span>
+            <div class="dep-item current">
+              <span>Xcode</span>
+              <span class="dep-version">26.2 ✓</span>
             </div>
             <div class="dep-item current">
-              <span>react</span>
-              <span class="dep-version">19.0.0 ✓</span>
+              <span>Swift</span>
+              <span class="dep-version">6.2 ✓</span>
             </div>
             <div class="dep-item current">
-              <span>expo</span>
-              <span class="dep-version">52.0.0 ✓</span>
+              <span>SwiftUI</span>
+              <span class="dep-version">Liquid Glass ✓</span>
             </div>
           </div>
         </div>
         <div class="devtool-card">
           <h3 class="card-title">🌍 Environments</h3>
           <div class="env-list">
-            <button class="env-item active-env">
+            <button class="env-item active-env" onclick="openLink('http://127.0.0.1:18789/')">
               <div class="env-dot dev"></div>
-              <span>Development</span>
-              <span class="env-url">localhost:3000</span>
+              <span>Xcode / Simulator</span>
+              <span class="env-url">Local Build</span>
             </button>
-            <button class="env-item">
+            <button class="env-item" onclick="openLink('https://appstoreconnect.apple.com')">
               <div class="env-dot staging"></div>
-              <span>Staging</span>
-              <span class="env-url">staging.wizardofapps.com</span>
+              <span>TestFlight</span>
+              <span class="env-url">appstoreconnect.apple.com</span>
             </button>
-            <button class="env-item">
+            <button class="env-item" onclick="openLink('https://apps.apple.com')">
               <div class="env-dot prod"></div>
-              <span>Production</span>
-              <span class="env-url">wizardofapps.com</span>
+              <span>App Store</span>
+              <span class="env-url">apps.apple.com</span>
             </button>
           </div>
         </div>
@@ -477,118 +496,222 @@
             <div class="factory-stage-badge" style="background:#FAE8FF;color:#A855F7">Stage 1</div>
           </div>
           <div class="factory-description">
-            24/7 trend research across Product Hunt, LinkedIn, X, TikTok, Reddit, and Hacker News. Identifies winning
-            app ideas and writes product briefs.
+            Researches market gaps, writes briefs, vets trademarks/domains/socials. Dumps to queue/.
           </div>
           <div class="factory-tools">
             <h4 class="factory-tools-title">Tools</h4>
             <div class="factory-tool-list">
-              <span class="factory-tool">Product Hunt</span>
-              <span class="factory-tool">LinkedIn</span>
-              <span class="factory-tool">X / Twitter</span>
-              <span class="factory-tool">TikTok</span>
-              <span class="factory-tool">Reddit</span>
-              <span class="factory-tool">Hacker News</span>
+              <span class="factory-tool">Brave Search</span>
+              <span class="factory-tool">USPTO DB</span>
               <span class="factory-tool">App Store</span>
-              <span class="factory-tool">Google Trends</span>
-              <span class="factory-tool">SimilarWeb</span>
             </div>
           </div>
           <div class="factory-output">
             <h4 class="factory-tools-title">Output</h4>
-            <div class="factory-output-item">Product Brief with market size, competition, revenue estimate</div>
+            <div class="factory-output-item">Vetted brief → queue/ folder</div>
           </div>
-          <div class="factory-status">Scanning for opportunities...</div>
+          <div class="factory-status" id="factory-status-luna">Loading status...</div>
         </div>
 
         <!-- Arrow -->
         <div class="factory-arrow">
           <div class="factory-arrow-line"></div>
-          <div class="factory-arrow-label" style="background:#FAE8FF;color:#A855F7">Auto-Handoff</div>
+          <div class="factory-arrow-label" style="background:#FAE8FF;color:#A855F7">Queue</div>
           <div class="factory-arrow-line"></div>
         </div>
 
-        <!-- STAGE 2: BUILD (Ivy) -->
+        <!-- STAGE 2: BRANDING (Blaze) -->
+        <div class="factory-card" data-stage="branding">
+          <div class="factory-card-stripe" style="background:#DC2626"></div>
+          <div class="factory-card-header">
+            <div class="factory-agent-info">
+              <div class="factory-avatar" style="background:#FEE2E2">🔥</div>
+              <div>
+                <div class="factory-agent-name">Blaze</div>
+                <div class="factory-agent-role">CMO — Trademark & Brand</div>
+              </div>
+            </div>
+            <div class="factory-stage-badge" style="background:#FEE2E2;color:#DC2626">Stage 2</div>
+          </div>
+          <div class="factory-description">
+            Verifies trademarks via USPTO, registers domains, grabs social handles. Also #2 IT backup.
+          </div>
+          <div class="factory-tools">
+            <h4 class="factory-tools-title">Tools</h4>
+            <div class="factory-tool-list">
+              <span class="factory-tool">USPTO Database</span>
+              <span class="factory-tool">Vercel Domains</span>
+              <span class="factory-tool">Social Media</span>
+            </div>
+          </div>
+          <div class="factory-output">
+            <h4 class="factory-tools-title">Output</h4>
+            <div class="factory-output-item">VETTED.md — clean trademark + domain + handles</div>
+          </div>
+          <div class="factory-status" id="factory-status-blaze">Loading status...</div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="factory-arrow">
+          <div class="factory-arrow-line"></div>
+          <div class="factory-arrow-label" style="background:#FEE2E2;color:#DC2626">Brand OK</div>
+          <div class="factory-arrow-line"></div>
+        </div>
+
+        <!-- STAGE 3: BUILD (Ivy + Vex) -->
         <div class="factory-card" data-stage="build">
           <div class="factory-card-stripe" style="background:#34D399"></div>
           <div class="factory-card-header">
             <div class="factory-agent-info">
-              <div class="factory-avatar" style="background:#D1FAE5">💻</div>
+              <div class="factory-avatar" style="background:#D1FAE5">🏗️</div>
               <div>
-                <div class="factory-agent-name">Ivy</div>
-                <div class="factory-agent-role">Code & Prototype Builder</div>
+                <div class="factory-agent-name">Ivy + Vex</div>
+                <div class="factory-agent-role">Builders #1 & #2</div>
               </div>
             </div>
-            <div class="factory-stage-badge" style="background:#D1FAE5;color:#059669">Stage 2</div>
+            <div class="factory-stage-badge" style="background:#D1FAE5;color:#059669">Stage 3</div>
           </div>
           <div class="factory-description">
-            Builds working prototypes with demo videos using Cursor Cloud Agent recording. Ships MVPs in hours, not
-            days.
+            Two builders pulling from queue/. Each works ONE app at a time until it compiles. Hands off to Ozzy + Jace.
           </div>
           <div class="factory-tools">
             <h4 class="factory-tools-title">Tools</h4>
             <div class="factory-tool-list">
-              <span class="factory-tool">Cursor AI</span>
-              <span class="factory-tool">Cloud Agent Recording</span>
-              <span class="factory-tool">Expo / React Native</span>
-              <span class="factory-tool">Next.js / Vite</span>
-              <span class="factory-tool">EAS Build</span>
-              <span class="factory-tool">GitHub</span>
-              <span class="factory-tool">Vercel</span>
-              <span class="factory-tool">ComfyUI</span>
-              <span class="factory-tool">App Screenshots</span>
+              <span class="factory-tool">Xcode</span>
+              <span class="factory-tool">SwiftUI</span>
+              <span class="factory-tool">StoreKit 2</span>
             </div>
           </div>
           <div class="factory-output">
             <h4 class="factory-tools-title">Output</h4>
-            <div class="factory-output-item">Working prototype + demo video + 5 screenshots + GitHub repo</div>
+            <div class="factory-output-item">Complete .xcodeproj + HANDOFF.md</div>
           </div>
-          <div class="factory-status">Awaiting product brief...</div>
+          <div class="factory-status" id="factory-status-ivy">Loading status...</div>
         </div>
 
         <!-- Arrow -->
         <div class="factory-arrow">
           <div class="factory-arrow-line"></div>
-          <div class="factory-arrow-label">Boss Approves</div>
+          <div class="factory-arrow-label" style="background:#D1FAE5;color:#059669">HANDOFF.md</div>
           <div class="factory-arrow-line"></div>
         </div>
 
-        <!-- STAGE 3: DISTRIBUTE (Nova) -->
+        <!-- STAGE 4: QC + ASO (Ozzy + Jace) -->
+        <div class="factory-card" data-stage="qa">
+          <div class="factory-card-stripe" style="background:#7C3AED"></div>
+          <div class="factory-card-header">
+            <div class="factory-agent-info">
+              <div class="factory-avatar" style="background:#EDE9FE">🦾</div>
+              <div>
+                <div class="factory-agent-name">Ozzy + Jace</div>
+                <div class="factory-agent-role">QA & ASO (parallel)</div>
+              </div>
+            </div>
+            <div class="factory-stage-badge" style="background:#EDE9FE;color:#7C3AED">Stage 4</div>
+          </div>
+          <div class="factory-description">
+            Ozzy reviews code quality + tests builds. Jace writes App Store listing, keywords, ASO. Run in parallel.
+          </div>
+          <div class="factory-tools">
+            <h4 class="factory-tools-title">Tools</h4>
+            <div class="factory-tool-list">
+              <span class="factory-tool">xcodebuild</span>
+              <span class="factory-tool">Code Review</span>
+              <span class="factory-tool">ASO Keywords</span>
+            </div>
+          </div>
+          <div class="factory-output">
+            <h4 class="factory-tools-title">Output</h4>
+            <div class="factory-output-item">REVIEW.md + ASO.md → ready for bundling</div>
+          </div>
+          <div class="factory-status" id="factory-status-vex">Loading status...</div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="factory-arrow">
+          <div class="factory-arrow-line"></div>
+          <div class="factory-arrow-label" style="background:#EDE9FE;color:#7C3AED">QC Pass</div>
+          <div class="factory-arrow-line"></div>
+        </div>
+
+        <!-- STAGE 5: BUNDLE + SCREENSHOTS (Nova + App Star) -->
         <div class="factory-card" data-stage="distribute">
           <div class="factory-card-stripe" style="background:#60A5FA"></div>
           <div class="factory-card-header">
             <div class="factory-agent-info">
               <div class="factory-avatar" style="background:#DBEAFE">🚀</div>
               <div>
-                <div class="factory-agent-name">Nova</div>
-                <div class="factory-agent-role">Distribution & Launch</div>
+                <div class="factory-agent-name">Nova + App Star</div>
+                <div class="factory-agent-role">Bundle & Screenshots</div>
               </div>
             </div>
-            <div class="factory-stage-badge" style="background:#DBEAFE;color:#2563EB">Stage 3</div>
+            <div class="factory-stage-badge" style="background:#DBEAFE;color:#2563EB">Stage 5</div>
           </div>
           <div class="factory-description">
-            Pushes products to every relevant platform. Handles ASO, metadata, pricing, launch campaigns, and
-            post-launch metrics.
+            Nova bundles the app + creates screenshots with pro templates. App Star does competitive analysis + icon
+            design.
           </div>
           <div class="factory-tools">
             <h4 class="factory-tools-title">Tools</h4>
             <div class="factory-tool-list">
+              <span class="factory-tool">App Screens</span>
+              <span class="factory-tool">Simulator</span>
               <span class="factory-tool">App Store Connect</span>
-              <span class="factory-tool">Google Play Console</span>
-              <span class="factory-tool">EAS Submit</span>
-              <span class="factory-tool">TestFlight</span>
-              <span class="factory-tool">Gumroad</span>
-              <span class="factory-tool">Amazon KDP</span>
-              <span class="factory-tool">Product Hunt</span>
-              <span class="factory-tool">Vercel Deploy</span>
-              <span class="factory-tool">ASO Keywords</span>
             </div>
           </div>
           <div class="factory-output">
             <h4 class="factory-tools-title">Output</h4>
-            <div class="factory-output-item">Live product on stores + launch campaign + daily metrics report</div>
+            <div class="factory-output-item">Complete bundle → screenshots + IPA + listing</div>
           </div>
-          <div class="factory-status">Awaiting prototype...</div>
+          <div class="factory-status" id="factory-status-nova">Loading status...</div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="factory-arrow">
+          <div class="factory-arrow-line"></div>
+          <div class="factory-arrow-label" style="background:#FEF3C7;color:#D97706">👑 Tammy Approves</div>
+          <div class="factory-arrow-line"></div>
+        </div>
+
+        <!-- STAGE 6: TESTFLIGHT + MARKETING (Blaze) -->
+        <div class="factory-card" data-stage="launch">
+          <div class="factory-card-stripe" style="background:#F59E0B"></div>
+          <div class="factory-card-header">
+            <div class="factory-agent-info">
+              <div class="factory-avatar" style="background:#FEF3C7">🔥</div>
+              <div>
+                <div class="factory-agent-name">Blaze</div>
+                <div class="factory-agent-role">Marketing Launch</div>
+              </div>
+            </div>
+            <div class="factory-stage-badge" style="background:#FEF3C7;color:#D97706">Stage 6</div>
+          </div>
+          <div class="factory-description">
+            After TestFlight, Blaze runs the marketing launch — social media, campaigns, tracks downloads.
+          </div>
+          <div class="factory-tools">
+            <h4 class="factory-tools-title">Tools</h4>
+            <div class="factory-tool-list">
+              <span class="factory-tool">Social Media</span>
+              <span class="factory-tool">Analytics</span>
+              <span class="factory-tool">Launch Plan</span>
+            </div>
+          </div>
+          <div class="factory-output">
+            <h4 class="factory-tools-title">Output</h4>
+            <div class="factory-output-item">App Store → live app + marketing campaign 🎉</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Claude IT Support Badge -->
+      <div
+        style="margin:20px 0;padding:12px 20px;background:rgba(107,114,128,0.1);border-radius:12px;display:flex;align-items:center;gap:12px">
+        <div class="factory-avatar" style="background:#F3F4F6">🔧</div>
+        <div>
+          <strong>Claude — IT Support (24/7)</strong>
+          <div style="font-size:13px;color:var(--text-muted)">Monitors gateway, Ollama, tools. Helps debug. Always on.
+            Escalation: Claude → Blaze → Ozzy → Antigravity → Tammy</div>
         </div>
       </div>
 
@@ -599,19 +722,27 @@
           <button class="btn-primary" onclick="addFactoryIdea()">+ Add Idea</button>
         </div>
         <div class="tracker-lanes">
-          <div class="tracker-lane" data-stage="research">
+          <div class="tracker-lane" data-stage="new-idea">
             <div class="tracker-lane-header" style="border-color:#E879F9">
               <span class="tracker-lane-dot" style="background:#E879F9"></span>
-              Researching
-              <span class="tracker-lane-count" id="count-research">0</span>
+              💡 New Ideas
+              <span class="tracker-lane-count" id="tcount-new-idea">0</span>
             </div>
-            <div class="tracker-lane-items" id="tracker-research"></div>
+            <div class="tracker-lane-items" id="tracker-new-idea"></div>
+          </div>
+          <div class="tracker-lane" data-stage="vetted">
+            <div class="tracker-lane-header" style="border-color:#A78BFA">
+              <span class="tracker-lane-dot" style="background:#A78BFA"></span>
+              ✅ Vetted
+              <span class="tracker-lane-count" id="tcount-vetted">0</span>
+            </div>
+            <div class="tracker-lane-items" id="tracker-vetted"></div>
           </div>
           <div class="tracker-lane" data-stage="building">
             <div class="tracker-lane-header" style="border-color:#34D399">
               <span class="tracker-lane-dot" style="background:#34D399"></span>
               Building
-              <span class="tracker-lane-count" id="count-building">0</span>
+              <span class="tracker-lane-count" id="tcount-building">0</span>
             </div>
             <div class="tracker-lane-items" id="tracker-building"></div>
           </div>
@@ -619,7 +750,7 @@
             <div class="tracker-lane-header" style="border-color:#F97316">
               <span class="tracker-lane-dot" style="background:#F97316"></span>
               Testing
-              <span class="tracker-lane-count" id="count-testing">0</span>
+              <span class="tracker-lane-count" id="tcount-testing">0</span>
             </div>
             <div class="tracker-lane-items" id="tracker-testing"></div>
           </div>
@@ -627,7 +758,7 @@
             <div class="tracker-lane-header" style="border-color:#F59E0B">
               <span class="tracker-lane-dot" style="background:#F59E0B"></span>
               Awaiting Approval
-              <span class="tracker-lane-count" id="count-approval">0</span>
+              <span class="tracker-lane-count" id="tcount-approval">0</span>
             </div>
             <div class="tracker-lane-items" id="tracker-approval"></div>
           </div>
@@ -635,7 +766,7 @@
             <div class="tracker-lane-header" style="border-color:#60A5FA">
               <span class="tracker-lane-dot" style="background:#60A5FA"></span>
               Distributing
-              <span class="tracker-lane-count" id="count-distributing">0</span>
+              <span class="tracker-lane-count" id="tcount-distributing">0</span>
             </div>
             <div class="tracker-lane-items" id="tracker-distributing"></div>
           </div>
@@ -643,9 +774,187 @@
             <div class="tracker-lane-header" style="border-color:#34C759">
               <span class="tracker-lane-dot" style="background:#34C759"></span>
               Launched
-              <span class="tracker-lane-count" id="count-launched">0</span>
+              <span class="tracker-lane-count" id="tcount-launched">0</span>
             </div>
             <div class="tracker-lane-items" id="tracker-launched"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TAMMY'S CHEAT SHEET ============ -->
+    <section id="section-cheatsheet" class="section">
+      <div class="section-header">
+        <h1 class="section-title">Tammy's Cheat Sheet 📋</h1>
+      </div>
+
+      <div class="grid-2col" style="gap:24px">
+        <!-- Tokens & Access -->
+        <div class="card">
+          <h3 style="margin:0 0 16px;color:var(--accent)">🔑 Tokens & Access</h3>
+          <table style="width:100%;font-size:13px">
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Browser Relay Token</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px;word-break:break-all">
+                6681ef5b399bf3e81dd71b6f4283d25d2d347057bbbf5e6b</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Gateway URL</td>
+              <td style="padding:8px 0;font-family:monospace">ws://127.0.0.1:18789</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Dashboard</td>
+              <td style="padding:8px 0"><a href="http://127.0.0.1:18789" target="_blank"
+                  style="color:var(--accent)">http://127.0.0.1:18789</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Gemini Auth</td>
+              <td style="padding:8px 0">tammylsantana@gmail.com (google-gemini-cli)</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 0;font-weight:600">Supabase</td>
+              <td style="padding:8px 0"><a href="https://supabase.com/dashboard/project/tkjlbgzymqnthyfzlwug"
+                  target="_blank" style="color:var(--accent)">Factory DB</a></td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Important Paths -->
+        <div class="card">
+          <h3 style="margin:0 0 16px;color:#34D399">📁 Important Paths</h3>
+          <table style="width:100%;font-size:13px">
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">All Config</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/openclaw.json</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Agent Memories</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/agents/[name]/agent/MEMORY.md
+              </td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Factory Queue</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/factory/queue/</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Factory Builds</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/factory/builds/</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Shift Scheduler</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/scripts/shift-scheduler.sh</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Shift Log</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/shift-log.txt</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Claude Status</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/factory/claude-status.log</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 0;font-weight:600">Gemini Usage</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/factory/gemini-usage.log</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Shift Schedule -->
+        <div class="card">
+          <h3 style="margin:0 0 16px;color:#F59E0B">⏰ Shift Schedule (2 agents + Claude 24/7)</h3>
+          <table style="width:100%;font-size:13px">
+            <tr style="border-bottom:1px solid var(--border-light);background:rgba(232,121,249,0.1)">
+              <td style="padding:8px">🕛 12 AM</td>
+              <td style="padding:8px">Luna + Blaze</td>
+              <td style="padding:8px">Research + Brand</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light);background:rgba(52,211,153,0.1)">
+              <td style="padding:8px">🕓 4 AM</td>
+              <td style="padding:8px">Ivy + Vex</td>
+              <td style="padding:8px">Build shift 1</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light);background:rgba(124,58,237,0.1)">
+              <td style="padding:8px">🕗 8 AM</td>
+              <td style="padding:8px">Ozzy + Jace</td>
+              <td style="padding:8px">QA + ASO</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light);background:rgba(245,158,11,0.1)">
+              <td style="padding:8px">🕛 12 PM</td>
+              <td style="padding:8px">App Star + Jace</td>
+              <td style="padding:8px">Screenshots + Marketing</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light);background:rgba(59,130,246,0.1)">
+              <td style="padding:8px">🕓 4 PM</td>
+              <td style="padding:8px">Nova + App Star</td>
+              <td style="padding:8px">Bundle + TestFlight</td>
+            </tr>
+            <tr style="background:rgba(52,211,153,0.1)">
+              <td style="padding:8px">🕗 8 PM</td>
+              <td style="padding:8px">Ivy + Vex</td>
+              <td style="padding:8px">Build shift 2</td>
+            </tr>
+            <tr style="background:rgba(107,114,128,0.15)">
+              <td style="padding:8px">🔧 24/7</td>
+              <td style="padding:8px;font-weight:700">Claude</td>
+              <td style="padding:8px">IT Support</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Quick Commands -->
+        <div class="card">
+          <h3 style="margin:0 0 16px;color:#2563EB">⚡ Quick Commands</h3>
+          <table style="width:100%;font-size:13px">
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Restart Gateway</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">openclaw gateway restart</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Get Browser Token</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">openclaw config get gateway.auth.token</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Check Channels</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">openclaw channels status --probe</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Run Shift Now</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/scripts/shift-scheduler.sh</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Broadcast Brief</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">~/.openclaw/scripts/briefing-broadcast.sh
+              </td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border-light)">
+              <td style="padding:8px 0;font-weight:600">Check Ollama</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">curl http://localhost:11434/api/tags</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 0;font-weight:600">Agent Sessions</td>
+              <td style="padding:8px 0;font-family:monospace;font-size:11px">openclaw sessions --all-agents --active 120
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Escalation Chain -->
+        <div class="card" style="grid-column: 1 / -1">
+          <h3 style="margin:0 0 16px;color:#DC2626">🚨 Escalation Chain</h3>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:14px;font-weight:500">
+            <span style="background:rgba(232,121,249,0.15);padding:6px 14px;border-radius:8px">Agent has issue</span>
+            <span style="color:var(--text-muted)">→</span>
+            <span style="background:rgba(107,114,128,0.15);padding:6px 14px;border-radius:8px">🔧 Claude (IT
+              24/7)</span>
+            <span style="color:var(--text-muted)">→</span>
+            <span style="background:rgba(220,38,38,0.15);padding:6px 14px;border-radius:8px">🔥 Blaze (#2 backup)</span>
+            <span style="color:var(--text-muted)">→</span>
+            <span style="background:rgba(124,58,237,0.15);padding:6px 14px;border-radius:8px">🦾 Ozzy (#3 backup)</span>
+            <span style="color:var(--text-muted)">→</span>
+            <span style="background:rgba(59,130,246,0.15);padding:6px 14px;border-radius:8px">🤖 Antigravity</span>
+            <span style="color:var(--text-muted)">→</span>
+            <span style="background:rgba(220,38,38,0.15);padding:6px 14px;border-radius:8px">👑 Tammy (last
+              resort)</span>
           </div>
         </div>
       </div>
@@ -654,35 +963,88 @@
     <!-- ============ TERMINAL ============ -->
     <section id="section-terminal" class="section">
       <div class="section-header">
-        <h1 class="section-title">Terminal</h1>
+        <h1 class="section-title">OpenClaw Sessions</h1>
         <div class="header-actions">
-          <button class="btn-secondary" onclick="clearTerminal()">Clear</button>
+          <button class="btn-secondary" onclick="openLink('http://127.0.0.1:18789/')">Open Full UI ↗</button>
         </div>
       </div>
-      <div class="terminal-container">
-        <div class="terminal-header">
-          <div class="terminal-dots">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-          </div>
-          <span class="terminal-title">tammysantanamacstudio — zsh</span>
+      <div
+        style="width:100%;height:calc(100vh - 120px);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+        <iframe src="http://127.0.0.1:18789/"
+          style="width:100%;height:100%;border:none;border-radius:12px;background:#1a1a2e;"></iframe>
+      </div>
+    </section>
+
+    <!-- ============ APPLE DEVELOPER ============ -->
+    <section id="section-apple" class="section">
+      <div class="section-header">
+        <h1 class="section-title"> Apple Developer Hub</h1>
+        <div class="header-actions">
+          <button class="btn-secondary" onclick="openLink('https://developer.apple.com')">Developer Portal ↗</button>
         </div>
-        <div class="terminal-body" id="terminal-body">
-          <div class="terminal-line">
-            <span class="terminal-prompt">❯</span>
-            <span class="terminal-text">Welcome to BTS Mission Control Terminal</span>
-          </div>
-          <div class="terminal-line">
-            <span class="terminal-prompt">❯</span>
-            <span class="terminal-text">Type commands to interact with your dev environment</span>
-          </div>
-        </div>
-        <div class="terminal-input-row">
-          <span class="terminal-prompt">❯</span>
-          <input type="text" id="terminal-input" class="terminal-input" placeholder="Type a command..." autofocus
-            onkeydown="handleTerminalInput(event)">
-        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <button class="btn-primary" onclick="loadApplePanel('https://appstoreconnect.apple.com', 'App Store Connect')"
+          style="font-size:0.85rem">
+          📦 App Store Connect
+        </button>
+        <button class="btn-secondary" onclick="loadApplePanel('https://appstoreconnect.apple.com/apps', 'My Apps')"
+          style="font-size:0.85rem">
+          📱 My Apps
+        </button>
+        <button class="btn-secondary"
+          onclick="loadApplePanel('https://appstoreconnect.apple.com/testflight', 'TestFlight')"
+          style="font-size:0.85rem">
+          ✈️ TestFlight
+        </button>
+        <button class="btn-secondary"
+          onclick="loadApplePanel('https://developer.apple.com/account/resources/certificates/list', 'Certificates')"
+          style="font-size:0.85rem">
+          🔐 Certificates
+        </button>
+        <button class="btn-secondary"
+          onclick="loadApplePanel('https://developer.apple.com/account/resources/identifiers/list', 'App IDs')"
+          style="font-size:0.85rem">
+          🆔 App IDs
+        </button>
+        <button class="btn-secondary"
+          onclick="loadApplePanel('https://developer.apple.com/account/resources/profiles/list', 'Profiles')"
+          style="font-size:0.85rem">
+          📋 Profiles
+        </button>
+        <button class="btn-secondary"
+          onclick="loadApplePanel('https://developer.apple.com/design/human-interface-guidelines/', 'HIG')"
+          style="font-size:0.85rem">
+          🎨 HIG
+        </button>
+        <button class="btn-secondary" onclick="loadApplePanel('https://developer.apple.com/documentation/', 'Docs')"
+          style="font-size:0.85rem">
+          📚 Documentation
+        </button>
+        <button class="btn-secondary" onclick="loadApplePanel('https://app.revenuecat.com', 'RevenueCat')"
+          style="font-size:0.85rem">
+          💰 RevenueCat
+        </button>
+        <button class="btn-secondary" onclick="loadApplePanel('https://supabase.com/dashboard', 'Supabase')"
+          style="font-size:0.85rem">
+          ⚡ Supabase
+        </button>
+        <button class="btn-secondary" onclick="loadApplePanel('https://appscreens.com', 'AppScreens')"
+          style="font-size:0.85rem">
+          🖼️ AppScreens
+        </button>
+      </div>
+      <div id="apple-panel-label" style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:8px;">
+        Select a tool above to load it here, or click ↗ to open in a new tab.
+      </div>
+      <div id="apple-iframe-wrapper"
+        style="width:100%;height:calc(100vh - 220px);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);display:none;">
+        <iframe id="apple-iframe" src="about:blank"
+          style="width:100%;height:100%;border:none;border-radius:12px;background:#fff;"></iframe>
+      </div>
+      <div id="apple-fallback" style="display:none;text-align:center;padding:3rem;">
+        <p style="font-size:1.1rem;margin-bottom:1rem;">Apple blocks embedding in iframes for security.</p>
+        <button class="btn-primary" id="apple-fallback-link" onclick="">Open in New Tab ↗</button>
       </div>
     </section>
   </main>
@@ -695,7 +1057,60 @@
     </div>
   </div>
 
+  <script src="factory-data.js"></script>
   <script src="app.js"></script>
+  <script>
+    // Live Factory Status — tries local JSON first, then Supabase
+    const SUPA_URL = 'https://tkjlbgzymqnthyfzlwug.supabase.co';
+    const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRramxiZ3p5bXFudGh5Znpsd3VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNjA2ODgsImV4cCI6MjA4NzczNjY4OH0.CX2aNeHdsBgqSgSIkZrpgo18vvY6yjALmnXJppqTsks';
+
+    function renderAgents(data) {
+      data.forEach(agent => {
+        const el = document.getElementById(`factory-status-${agent.agent_id}`);
+        if (!el) return;
+        const isWorking = agent.status === 'working';
+        const dot = isWorking ? '🟢' : '⚫';
+        const label = isWorking ? 'Working' : 'Idle';
+        const task = agent.current_task || '';
+        const ago = agent.last_updated ? timeAgo(new Date(agent.last_updated)) : '';
+        el.innerHTML = `${dot} <strong>${label}</strong>${task ? ' — ' + task : ''}${ago ? ' <span style="opacity:0.5;font-size:0.75rem">(' + ago + ')</span>' : ''}`;
+        el.style.color = isWorking ? '#10B981' : '#6B7280';
+      });
+    }
+
+    async function fetchFactoryStatus() {
+      try {
+        // Try local file first (works with file:// and local dev)
+        const localRes = await fetch('./factory-status.json?' + Date.now());
+        if (localRes.ok) {
+          const data = await localRes.json();
+          renderAgents(data);
+          return;
+        }
+      } catch (e) { }
+      // Fall back to Supabase
+      try {
+        const res = await fetch(`${SUPA_URL}/rest/v1/factory_status?select=*`, {
+          headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+        });
+        const data = await res.json();
+        renderAgents(data);
+      } catch (e) {
+        console.error('Factory status fetch error:', e);
+      }
+    }
+
+    function timeAgo(date) {
+      const seconds = Math.floor((new Date() - date) / 1000);
+      if (seconds < 60) return 'just now';
+      if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';
+      if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
+      return Math.floor(seconds / 86400) + 'd ago';
+    }
+
+    fetchFactoryStatus();
+    setInterval(fetchFactoryStatus, 10000);
+  </script>
 </body>
 
 </html>
